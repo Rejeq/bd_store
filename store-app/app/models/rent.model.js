@@ -13,6 +13,8 @@ module.exports = (sequelize, Sequelize) => {
         references: {
           model: "Client",
           key: "IdClient",
+          onDelete: "SET NULL",
+          onUpdate: "CASCADE",
         },
       },
       IdTariff: {
@@ -21,6 +23,8 @@ module.exports = (sequelize, Sequelize) => {
         references: {
           model: "Tariff",
           key: "IdTariff",
+          onDelete: "SET NULL",
+          onUpdate: "CASCADE",
         },
       },
       RentStart: {
