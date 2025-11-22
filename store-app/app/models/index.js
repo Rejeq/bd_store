@@ -19,6 +19,12 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.tutorials = require("./tutorial.model.js")(sequelize, Sequelize);
+db.client = require("./client.model.js")(sequelize, Sequelize);
+db.bike = require("./bike.model.js")(sequelize, Sequelize);
+db.rent = require("./rent.model.js")(sequelize, Sequelize);
+db.rentBike = require("./rentBike.model.js")(sequelize, Sequelize);
+db.repair = require("./repair.model.js")(sequelize, Sequelize);
+db.tariff = require("./tariff.model.js")(sequelize, Sequelize);
+db.tarriffBike = require("./tarriffBike.model.js")(sequelize, Sequelize);
 
 module.exports = db;
