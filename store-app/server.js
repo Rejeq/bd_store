@@ -1,6 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsDoc = require('swagger-jsdoc');
+
 require("dotenv").config();
 
 
@@ -36,6 +39,27 @@ require("./app/routes/bike.routes.js")(app);
 require("./app/routes/tariff.routes.js")(app);
 
 const PORT = process.env.NODE_DOCKER_PORT || 8080;
+
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Trade-APP API',
+      version: '1.0.0',
+      description: 'API documentation',
+    },
+    servers: [
+      {
+        url: `http://localhost:${PORT}`,
+      },
+    ],
+  },
+  apis: ['./app/routes/*.routes.js'],
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
