@@ -32,7 +32,8 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to trade-app application." });
 });
 
-// set port, listen for requests
+require("./app/routes/bike.routes.js")(app);
+
 const PORT = process.env.NODE_DOCKER_PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
