@@ -1,39 +1,40 @@
 module.exports = (sequelize, Sequelize) => {
   const Bike = sequelize.define(
-    "Bike",
+    "bike",
     {
-      IdBike: {
+      id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
         allowNull: false,
       },
-      SerialNumber: {
+      serialNumber: {
         type: Sequelize.STRING(40),
         allowNull: false,
       },
-      Model: {
+      model: {
         type: Sequelize.STRING(50),
         allowNull: false,
       },
-      Category: {
+      category: {
         type: Sequelize.STRING(50),
         allowNull: false,
       },
-      Condition: {
+      condition: {
         type: Sequelize.STRING(50),
         allowNull: false,
       },
-      IsRepairing: {
+      isRepairing: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
       },
-      PurchaseDate: {
+      purchaseDate: {
         type: Sequelize.DATE,
         allowNull: true,
       },
     },
     {
-      tableName: "Bike",
+      tableName: "bike",
       timestamps: false,
     },
   );

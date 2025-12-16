@@ -1,27 +1,28 @@
 module.exports = (sequelize, Sequelize) => {
   const Tariff = sequelize.define(
-    "Tariff",
+    "tariff",
     {
-      IdTariff: {
+      id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
         allowNull: false,
       },
-      Category: {
+      category: {
         type: Sequelize.STRING(50),
         allowNull: false,
       },
-      PricePerHour: {
+      pricePerHour: {
         type: Sequelize.DECIMAL(6, 2),
         allowNull: false,
       },
-      EffectiveDate: {
+      effectiveDate: {
         type: Sequelize.DATE,
         allowNull: false,
       },
     },
     {
-      tableName: "Tariff",
+      tableName: "tariff",
       timestamps: false,
     },
   );

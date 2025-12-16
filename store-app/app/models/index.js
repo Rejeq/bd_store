@@ -6,6 +6,9 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   dialect: dbConfig.dialect,
   port: dbConfig.port,
   operatorsAliases: false,
+  define: {
+    underscored: true,
+  },
   pool: {
     max: dbConfig.pool.max,
     min: dbConfig.pool.min,
@@ -25,6 +28,6 @@ db.rent = require("./rent.model.js")(sequelize, Sequelize);
 db.rentBike = require("./rentBike.model.js")(sequelize, Sequelize);
 db.repair = require("./repair.model.js")(sequelize, Sequelize);
 db.tariff = require("./tariff.model.js")(sequelize, Sequelize);
-db.tarriffBike = require("./tarriffBike.model.js")(sequelize, Sequelize);
+db.tariffBike = require("./tariffBike.model.js")(sequelize, Sequelize);
 
 module.exports = db;

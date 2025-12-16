@@ -1,26 +1,26 @@
 module.exports = (sequelize, Sequelize) => {
   const TariffBike = sequelize.define(
-    "TariffBike",
+    "tariff_bike",
     {
-      IdTariff: {
+      idTariff: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "Tariff",
-          key: "IdTariff",
+          model: "tariff",
+          key: "id",
         },
       },
-      IdBike: {
+      idBike: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "Bike",
-          key: "IdBike",
+          model: "bike",
+          key: "id",
         },
       },
     },
     {
-      tableName: "TariffBike",
+      tableName: "tariff_bike",
       timestamps: false,
     },
   );

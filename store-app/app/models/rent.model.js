@@ -1,47 +1,48 @@
 module.exports = (sequelize, Sequelize) => {
   const Rent = sequelize.define(
-    "Rent",
+    "rent",
     {
-      IdRent: {
+      id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
         allowNull: false,
       },
-      IdClient: {
+      idClient: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "Client",
-          key: "IdClient",
+          model: "client",
+          key: "id",
           onDelete: "SET NULL",
           onUpdate: "CASCADE",
         },
       },
-      IdTariff: {
+      idTariff: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "Tariff",
-          key: "IdTariff",
+          model: "tariff",
+          key: "id",
           onDelete: "SET NULL",
           onUpdate: "CASCADE",
         },
       },
-      RentStart: {
+      rentStart: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      RentEnd: {
+      rentEnd: {
         type: Sequelize.DATE,
         allowNull: true,
       },
-      TotalPrice: {
+      totalPrice: {
         type: Sequelize.DECIMAL(6, 2),
         allowNull: true,
       },
     },
     {
-      tableName: "Rent",
+      tableName: "rent",
       timestamps: false,
     },
   );

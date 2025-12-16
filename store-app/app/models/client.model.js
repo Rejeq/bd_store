@@ -1,31 +1,32 @@
 module.exports = (sequelize, Sequelize) => {
   const Client = sequelize.define(
-    "Client",
+    "client",
     {
-      IdClient: {
+      id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
         allowNull: false,
       },
-      FullName: {
+      fullName: {
         type: Sequelize.STRING(50),
         allowNull: false,
       },
-      Passport: {
+      passport: {
         type: Sequelize.STRING(40),
         allowNull: false,
       },
-      Phone: {
+      phone: {
         type: Sequelize.STRING(15),
         allowNull: true,
       },
-      RegistrationDate: {
+      registrationDate: {
         type: Sequelize.DATE,
         allowNull: false,
       },
     },
     {
-      tableName: "Client",
+      tableName: "client",
       timestamps: false,
     },
   );

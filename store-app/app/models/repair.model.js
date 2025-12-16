@@ -1,27 +1,28 @@
 module.exports = (sequelize, Sequelize) => {
   const Repair = sequelize.define(
-    "Repair",
+    "repair",
     {
-      IdRepair: {
+      id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
       },
-      IdBike: {
+      idBike: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "Bike",
-          key: "IdBike",
+          model: "bike",
+          key: "id",
         },
       },
-      RepairStart: {
+      repairStart: {
         type: Sequelize.DECIMAL(6, 2),
         allowNull: false,
       },
     },
     {
-      tableName: "Repair",
+      tableName: "repair",
       timestamps: false,
     },
   );
