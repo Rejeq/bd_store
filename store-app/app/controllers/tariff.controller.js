@@ -1,7 +1,8 @@
 const db = require("../models");
+const Tariff = db.tariff;
 const Bike = db.bike;
-const TariffBike = db.tariffBike;
 const Op = db.Sequelize.Op;
+const { QueryTypes } = require('sequelize');
 
 exports.create = (req, res) => {
   if (!req.body.serialNumber && !req.body.model && !req.body.category) {
@@ -11,34 +12,31 @@ exports.create = (req, res) => {
     return;
   }
 
-  const bike = {
-    serialNumber: req.body.serialNumber,
-    model: req.body.model,
+  const tariff = {
     category: req.body.category,
-    condition: req.body.condition,
-    isRepairing: req.body.isRepairing,
-    purchaseDate: req.body.purchaseDate,
+    pricePerHour: req.body.pricePerHour,
+    effectiveDate: req.body.effectiveDate,
   };
 
-  Bike.create(bike)
+  Tariff.create(tariff)
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Unable to create bike",
+        message: err.message || "Unable to create tariff",
       });
     });
 };
 
 exports.findAll = (req, res) => {
-  Bike.findAll()
+  Tariff.findAll()
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Unable to create bike",
+        message: err.message || "Unable to create tariff",
       });
     });
 };
@@ -46,19 +44,19 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Bike.findByPk(id)
+  Tariff.findByPk(id)
     .then((data) => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Bike with id=${id}.`,
+          message: `Cannot find Tariff with id=${id}.`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving Bike with id=" + id,
+        message: "Error retrieving Tariff with id=" + id,
       });
     });
 };
@@ -66,7 +64,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  Bike.update(req.body, {
+  Tariff.update(req.body, {
     where: { id: id },
   })
     .then((num) => {
@@ -76,13 +74,13 @@ exports.update = (req, res) => {
         });
       } else {
         res.send({
-          message: `Unable to update bike id=${id}`,
+          message: `Unable to update tariff id=${id}`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Unable to update bike id=" + id,
+        message: "Unable to update tariff id=" + id,
       });
     });
 };
@@ -90,7 +88,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  Bike.destroy({
+  Tariff.destroy({
     where: { id: id },
   })
     .then((num) => {
@@ -100,48 +98,49 @@ exports.delete = (req, res) => {
         });
       } else {
         res.send({
-          message: `Unable to delete bike id=${id}`,
+          message: `Unable to delete tariff id=${id}`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Unable to update bike id=" + id,
+        message: "Unable to update tariff id=" + id,
       });
     });
 };
 
 exports.deleteAll = (req, res) => {
-  Bike.destroy({
+  Tariff.destroy({
     where: {},
     truncate: false,
   })
     .then((nums) => {
-      res.send({ message: "All bikes was deleted" });
+      res.send({ message: "All tariffs was deleted" });
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Unable to remove all Bikes.",
+        message: err.message || "Unable to remove all tariffs.",
       });
     });
 };
 
-exports.applyTariff = (req, res) => {
-  const idBike = req.params.id;
-  const idTariff = req.params.idTariff;
+exports.findAllBikes = (req, res) => {
+    const tariffId = req.params.id;
 
-  const data = {
-    idBike: idBike,
-    idTariff: idTariff,
-  };
-
-  TariffBike.create(data)
-    .then((nums) => {
-      res.send({ message: "Tariff was applied to the bike" });
+    db.sequelize.query('SELECT b.* FROM bike AS b LEFT JOIN tariff_bike AS tb ON tb.id_bike = b.id WHERE tb.id_tariff = :id', {
+        model: Bike,
+        mapToModel: true,
+        replacements: {id: tariffId},
+        type: QueryTypes.SELECT,
     })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Unable to apply tariff",
-      });
+    .then(result => {
+        console.log(JSON.stringify(result))
+        res.send(result);
+    })
+    .catch(err => {
+        res.status(500).send({
+            message:
+              err.message || "Some error occurred while getting all bikes."
+          });
     });
 };
